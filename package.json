@@ -1,0 +1,25 @@
+{
+  "name": "staffsync",
+  "version": "1.0.0",
+  "description": "StaffSync - Modern Human Resource Management System (MERN Stack)",
+  "scripts": {
+    "server": "node --watch server/server.js",
+    "client": "npm --prefix client run dev",
+    "seed": "node server/utils/seed.js",
+    "test": "npm --prefix server test",
+    "build": "npm --prefix client run build"
+  },
+  "dependencies": {
+    "axios": "^1.20.0",
+    "bcryptjs": "^3.0.3",
+    "bootstrap": "^5.3.8",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.61.0",
+    "mongoose": "^9.11.4",
+    "react-router-dom": "^7.18.4",
+    "recharts": "^3.10.1"
+  }
+}
