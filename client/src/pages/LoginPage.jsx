@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Layers, Lock, Mail, ArrowRight, ShieldCheck, UserCheck, AlertCircle, Sparkles } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { Layers, Lock, Mail, ArrowRight, ShieldCheck, UserCheck, AlertCircle, Sparkles, Sun, Moon } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ const LoginPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -48,19 +50,40 @@ const LoginPage = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0fdf4 100%)',
+      background: isDark
+        ? 'radial-gradient(circle at 50% 20%, #151d33 0%, #0b1120 70%)'
+        : 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0fdf4 100%)',
       padding: '1.5rem',
       position: 'relative',
       overflow: 'hidden',
+      transition: 'background var(--transition-fast)',
     }}>
-      {/* Background soft ambient orbs */}
+      {/* Top Corner Theme Switcher */}
+      <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10 }}>
+        <button
+          onClick={toggleTheme}
+          className="theme-toggle-btn"
+          title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+          aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+        >
+          {isDark ? (
+            <Sun size={18} style={{ color: '#fbbf24' }} />
+          ) : (
+            <Moon size={18} style={{ color: 'var(--primary)' }} />
+          )}
+        </button>
+      </div>
+
+      {/* Background ambient orbs */}
       <div style={{
         position: 'absolute',
         top: '10%',
         left: '15%',
         width: '400px',
         height: '400px',
-        background: 'radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)',
+        background: isDark
+          ? 'radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)',
         borderRadius: '50%',
         filter: 'blur(50px)',
         pointerEvents: 'none',
@@ -71,7 +94,9 @@ const LoginPage = () => {
         right: '15%',
         width: '350px',
         height: '350px',
-        background: 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)',
+        background: isDark
+          ? 'radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%)'
+          : 'radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%)',
         borderRadius: '50%',
         filter: 'blur(50px)',
         pointerEvents: 'none',
@@ -91,8 +116,8 @@ const LoginPage = () => {
             width: '54px',
             height: '54px',
             borderRadius: '14px',
-            background: 'linear-gradient(135deg, #4f46e5, #8b5cf6)',
-            boxShadow: '0 4px 14px rgba(79, 70, 229, 0.3)',
+            background: 'linear-gradient(135deg, var(--primary), var(--accent-purple))',
+            boxShadow: '0 4px 14px var(--primary-glow)',
             color: '#ffffff',
             marginBottom: '0.875rem',
           }}>
@@ -102,29 +127,29 @@ const LoginPage = () => {
             fontSize: '1.875rem',
             fontWeight: 800,
             letterSpacing: '-0.03em',
-            color: '#0f172a',
+            color: 'var(--text-main)',
             margin: 0,
           }}>
             StaffSync
           </h1>
-          <p style={{ color: '#64748b', fontSize: '0.875rem', marginTop: '0.25rem' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
             Enterprise Human Resource Management System
           </p>
         </div>
 
         {/* Card */}
         <div style={{
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--bg-card)',
           borderRadius: 'var(--radius-xl)',
           padding: '2.25rem',
           border: '1px solid var(--border-color)',
           boxShadow: 'var(--shadow-xl)',
         }}>
           <div style={{ marginBottom: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-main)', margin: 0 }}>
               Welcome back
             </h2>
-            <p style={{ color: '#64748b', fontSize: '0.8125rem', marginTop: '0.25rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.8125rem', marginTop: '0.25rem' }}>
               Sign in with your enterprise credentials or click a demo profile.
             </p>
           </div>
@@ -135,10 +160,10 @@ const LoginPage = () => {
               alignItems: 'center',
               gap: '0.5rem',
               padding: '0.75rem 1rem',
-              backgroundColor: '#fff1f2',
-              border: '1px solid #fecdd3',
+              backgroundColor: 'var(--danger-bg)',
+              border: '1px solid var(--danger-border)',
               borderRadius: 'var(--radius-sm)',
-              color: '#e11d48',
+              color: 'var(--danger-text)',
               fontSize: '0.8125rem',
               marginBottom: '1.25rem',
             }}>
@@ -156,7 +181,7 @@ const LoginPage = () => {
                   left: '12px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: '#94a3b8',
+                  color: 'var(--text-dim)',
                 }} />
                 <input
                   type="email"
@@ -178,7 +203,7 @@ const LoginPage = () => {
                   left: '12px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  color: '#94a3b8',
+                  color: 'var(--text-dim)',
                 }} />
                 <input
                   type="password"
@@ -214,7 +239,7 @@ const LoginPage = () => {
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
-              color: '#94a3b8',
+              color: 'var(--text-dim)',
               textAlign: 'center',
               marginBottom: '0.75rem',
               display: 'flex',
@@ -222,7 +247,7 @@ const LoginPage = () => {
               justifyContent: 'center',
               gap: '4px',
             }}>
-              <Sparkles size={12} style={{ color: '#8b5cf6' }} /> Instant Demo Profiles
+              <Sparkles size={12} style={{ color: 'var(--accent-purple)' }} /> Instant Demo Profiles
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -233,13 +258,13 @@ const LoginPage = () => {
                 style={{
                   justifyContent: 'space-between',
                   padding: '0.625rem 0.875rem',
-                  backgroundColor: '#f8fafc',
-                  borderColor: '#e2e8f0',
+                  backgroundColor: 'var(--bg-surface)',
+                  borderColor: 'var(--border-color)',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <ShieldCheck size={16} style={{ color: '#4f46e5' }} />
-                  <span style={{ fontWeight: 600, color: '#0f172a' }}>HR Administrator</span>
+                  <ShieldCheck size={16} style={{ color: 'var(--primary)' }} />
+                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>HR Administrator</span>
                 </div>
                 <span className="badge badge-info" style={{ fontSize: '0.65rem' }}>All Access</span>
               </button>
@@ -251,13 +276,13 @@ const LoginPage = () => {
                 style={{
                   justifyContent: 'space-between',
                   padding: '0.625rem 0.875rem',
-                  backgroundColor: '#f8fafc',
-                  borderColor: '#e2e8f0',
+                  backgroundColor: 'var(--bg-surface)',
+                  borderColor: 'var(--border-color)',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <UserCheck size={16} style={{ color: '#0284c7' }} />
-                  <span style={{ fontWeight: 600, color: '#0f172a' }}>Engineering Lead</span>
+                  <UserCheck size={16} style={{ color: 'var(--accent-cyan)' }} />
+                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>Engineering Lead</span>
                 </div>
                 <span className="badge badge-warning" style={{ fontSize: '0.65rem' }}>Manager</span>
               </button>
@@ -269,13 +294,13 @@ const LoginPage = () => {
                 style={{
                   justifyContent: 'space-between',
                   padding: '0.625rem 0.875rem',
-                  backgroundColor: '#f8fafc',
-                  borderColor: '#e2e8f0',
+                  backgroundColor: 'var(--bg-surface)',
+                  borderColor: 'var(--border-color)',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <UserCheck size={16} style={{ color: '#10b981' }} />
-                  <span style={{ fontWeight: 600, color: '#0f172a' }}>Alice Johnson (Developer)</span>
+                  <UserCheck size={16} style={{ color: 'var(--accent-emerald)' }} />
+                  <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>Alice Johnson (Developer)</span>
                 </div>
                 <span className="badge badge-success" style={{ fontSize: '0.65rem' }}>Employee</span>
               </button>

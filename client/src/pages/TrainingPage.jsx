@@ -139,7 +139,7 @@ const TrainingPage = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#f5f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7c3aed' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'var(--role-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--role-text)' }}>
               <GraduationCap size={20} />
             </div>
             <span>Learning & Development Programs</span>
@@ -162,7 +162,7 @@ const TrainingPage = () => {
           Loading training programs...
         </div>
       ) : trainings.length === 0 ? (
-        <div className="glass-card" style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-dim)', backgroundColor: '#ffffff' }}>
+        <div className="glass-card" style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-dim)', backgroundColor: 'var(--bg-card)' }}>
           <BookOpen size={48} style={{ opacity: 0.25, margin: '0 auto 1rem', color: 'var(--primary)' }} />
           <h3>No Training Programs Scheduled</h3>
           <p style={{ marginTop: '0.5rem', color: 'var(--text-muted)' }}>Check back later or schedule a new talent workshop.</p>
@@ -184,7 +184,7 @@ const TrainingPage = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  backgroundColor: '#ffffff',
+                  backgroundColor: 'var(--bg-card)',
                 }}
               >
                 <div>
@@ -206,16 +206,16 @@ const TrainingPage = () => {
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.8125rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <User size={15} style={{ color: '#0284c7' }} />
+                      <User size={15} style={{ color: 'var(--accent-cyan)' }} />
                       <span>Trainer: <strong style={{ color: 'var(--text-main)' }}>{t.trainer}</strong></span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <Calendar size={15} style={{ color: '#d97706' }} />
+                      <Calendar size={15} style={{ color: 'var(--accent-amber)' }} />
                       <span>{formatDate(t.startDate)} → {formatDate(t.endDate)}</span>
                     </div>
                     {t.location && (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <MapPin size={15} style={{ color: '#e11d48' }} />
+                        <MapPin size={15} style={{ color: 'var(--accent-rose)' }} />
                         <span>{t.location}</span>
                       </div>
                     )}
@@ -230,8 +230,8 @@ const TrainingPage = () => {
                       {enrolledCount} / {t.capacity} ({fillPct}%)
                     </span>
                   </div>
-                  <div style={{ width: '100%', height: '6px', backgroundColor: '#f1f5f9', borderRadius: '3px', overflow: 'hidden', marginBottom: '1rem' }}>
-                    <div style={{ width: `${fillPct}%`, height: '100%', background: 'linear-gradient(90deg, #4f46e5, #0284c7)', borderRadius: '3px' }} />
+                  <div style={{ width: '100%', height: '6px', backgroundColor: 'var(--bg-surface)', borderRadius: '3px', overflow: 'hidden', marginBottom: '1rem' }}>
+                    <div style={{ width: `${fillPct}%`, height: '100%', background: 'linear-gradient(90deg, var(--primary), var(--accent-cyan))', borderRadius: '3px' }} />
                   </div>
 
                   {(isHR || isManager) && (
@@ -253,7 +253,7 @@ const TrainingPage = () => {
       {/* Create Program Modal */}
       <Modal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} title="Schedule New Training Program">
         {formError && (
-          <div style={{ padding: '0.75rem', background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
+          <div style={{ padding: '0.75rem', background: 'var(--danger-bg)', color: 'var(--danger-text)', border: '1px solid var(--danger-border)', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
             {formError}
           </div>
         )}
@@ -382,7 +382,7 @@ const TrainingPage = () => {
                   gap: '0.75rem',
                   padding: '0.5rem 0.75rem',
                   borderRadius: '6px',
-                  backgroundColor: isChecked ? '#eef2ff' : 'transparent',
+                  backgroundColor: isChecked ? 'var(--primary-light)' : 'transparent',
                   cursor: 'pointer',
                   marginBottom: '2px',
                 }}

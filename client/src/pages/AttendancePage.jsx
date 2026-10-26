@@ -11,8 +11,6 @@ import {
   Play,
   Square,
   Users,
-  Timer,
-  Calendar,
 } from 'lucide-react';
 
 const AttendancePage = () => {
@@ -130,7 +128,7 @@ const AttendancePage = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'var(--success-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--success-text)' }}>
               <CalendarCheck size={20} />
             </div>
             <span>Attendance & Timesheets</span>
@@ -144,7 +142,7 @@ const AttendancePage = () => {
         {(isHR || isManager) && (
           <div style={{
             display: 'flex',
-            backgroundColor: '#ffffff',
+            backgroundColor: 'var(--bg-card)',
             padding: '0.25rem',
             borderRadius: 'var(--radius-sm)',
             border: '1px solid var(--border-color)',
@@ -170,7 +168,7 @@ const AttendancePage = () => {
 
       {/* Clock-In Terminal Card */}
       {activeTab === 'my' && (
-        <div className="glass-card" style={{ marginBottom: '2rem', padding: '1.75rem 2rem', backgroundColor: '#ffffff' }}>
+        <div className="glass-card" style={{ marginBottom: '2rem', padding: '1.75rem 2rem', backgroundColor: 'var(--bg-card)' }}>
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -186,17 +184,18 @@ const AttendancePage = () => {
                 borderRadius: '16px',
                 backgroundColor: todayStatus
                   ? todayStatus.checkOut
-                    ? '#eff6ff'
-                    : '#ecfdf5'
-                  : '#f5f3ff',
+                    ? 'var(--info-bg)'
+                    : 'var(--success-bg)'
+                  : 'var(--role-bg)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: todayStatus
                   ? todayStatus.checkOut
-                    ? '#3b82f6'
-                    : '#10b981'
-                  : '#8b5cf6',
+                    ? 'var(--info-text)'
+                    : 'var(--success-text)'
+                  : 'var(--role-text)',
+                border: '1px solid var(--border-color)',
               }}>
                 <Clock size={28} />
               </div>
@@ -234,7 +233,7 @@ const AttendancePage = () => {
                   fontSize: '2rem',
                   fontWeight: 800,
                   fontFamily: 'monospace',
-                  color: '#10b981',
+                  color: 'var(--success-text)',
                   letterSpacing: '0.05em',
                 }}>
                   {elapsed}
@@ -280,7 +279,7 @@ const AttendancePage = () => {
             value={stats.presentToday || 0}
             subtext="Clocked in staff"
             icon={Users}
-            color="#10b981"
+            color="var(--accent-emerald)"
             bgTint="#ecfdf5"
             badgeText="Turnout"
             badgeType="success"
@@ -290,7 +289,7 @@ const AttendancePage = () => {
             value={`${stats.onTimeRate ?? 92}%`}
             subtext="Arrived before 9:15 AM"
             icon={CheckCircle}
-            color="#3b82f6"
+            color="var(--accent-blue)"
             bgTint="#eff6ff"
             badgeText="Punctuality"
             badgeType="info"
@@ -300,7 +299,7 @@ const AttendancePage = () => {
             value={stats.lateToday || 0}
             subtext="Delayed check-ins"
             icon={AlertTriangle}
-            color="#d97706"
+            color="var(--accent-amber)"
             bgTint="#fffbeb"
             badgeText="Delayed"
             badgeType="warning"
@@ -310,7 +309,7 @@ const AttendancePage = () => {
             value={`${stats.avgWorkHours ?? 8.2}h`}
             subtext="Per completed shift"
             icon={Clock}
-            color="#8b5cf6"
+            color="var(--accent-purple)"
             bgTint="#f5f3ff"
             badgeText="Shift Avg"
             badgeType="role"

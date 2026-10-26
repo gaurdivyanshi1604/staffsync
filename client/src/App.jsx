@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -34,35 +35,37 @@ const AppLayout = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Public Route */}
-          <Route path="/login" element={<LoginPage />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Route */}
+            <Route path="/login" element={<LoginPage />} />
 
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<AppLayout />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route
-                path="/employees"
-                element={<ProtectedRoute allowedRoles={['hr_admin', 'manager']} />}
-              >
-                <Route index element={<EmployeesPage />} />
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<AppLayout />}>
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route
+                  path="/employees"
+                  element={<ProtectedRoute allowedRoles={['hr_admin', 'manager']} />}
+                >
+                  <Route index element={<EmployeesPage />} />
+                </Route>
+                <Route path="/attendance" element={<AttendancePage />} />
+                <Route path="/leaves" element={<LeavesPage />} />
+                <Route path="/training" element={<TrainingPage />} />
+                <Route path="/announcements" element={<AnnouncementsPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
               </Route>
-              <Route path="/attendance" element={<AttendancePage />} />
-              <Route path="/leaves" element={<LeavesPage />} />
-              <Route path="/training" element={<TrainingPage />} />
-              <Route path="/announcements" element={<AnnouncementsPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
             </Route>
-          </Route>
 
-          {/* Catch-all redirect */}
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            {/* Catch-all redirect */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

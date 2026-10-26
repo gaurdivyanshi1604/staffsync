@@ -4,10 +4,8 @@ import {
   UserCheck,
   Shield,
   KeyRound,
-  Phone,
   Mail,
   Building,
-  Briefcase,
   Calendar,
   CheckCircle,
   AlertCircle,
@@ -88,7 +86,7 @@ const ProfilePage = () => {
       {/* Title */}
       <div style={{ marginBottom: '2rem' }}>
         <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#eef2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4f46e5' }}>
+          <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
             <UserCheck size={20} />
           </div>
           <span>My Profile & Settings</span>
@@ -100,13 +98,13 @@ const ProfilePage = () => {
 
       <div className="grid-cols-3" style={{ gap: '2rem' }}>
         {/* Left Card: Summary Profile Badge */}
-        <div className="glass-card" style={{ height: 'fit-content', backgroundColor: '#ffffff' }}>
+        <div className="glass-card" style={{ height: 'fit-content', backgroundColor: 'var(--bg-card)' }}>
           <div style={{ textAlign: 'center', padding: '1rem 0' }}>
             <div style={{
               width: '80px',
               height: '80px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #4f46e5, #8b5cf6)',
+              background: 'linear-gradient(135deg, var(--primary), var(--accent-purple))',
               color: '#ffffff',
               fontSize: '2rem',
               fontWeight: 800,
@@ -114,7 +112,7 @@ const ProfilePage = () => {
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 1.25rem',
-              boxShadow: '0 4px 14px rgba(79, 70, 229, 0.25)',
+              boxShadow: '0 4px 14px var(--primary-glow)',
             }}>
               {user?.fullName?.charAt(0) || 'U'}
             </div>
@@ -140,7 +138,7 @@ const ProfilePage = () => {
               <span style={{ color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Building size={14} /> Department
               </span>
-              <span style={{ fontWeight: 600 }}>{user?.department || '—'}</span>
+              <span style={{ fontWeight: 600, color: 'var(--text-main)' }}>{user?.department || '—'}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -152,7 +150,7 @@ const ProfilePage = () => {
               <span style={{ color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Calendar size={14} /> Joined Date
               </span>
-              <span>{formatDate(user?.joiningDate)}</span>
+              <span style={{ color: 'var(--text-muted)' }}>{formatDate(user?.joiningDate)}</span>
             </div>
           </div>
         </div>
@@ -160,7 +158,7 @@ const ProfilePage = () => {
         {/* Right 2 Columns: Edit Details & Security */}
         <div style={{ gridColumn: 'span 2', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
           {/* Edit Profile Form */}
-          <div className="glass-card" style={{ backgroundColor: '#ffffff' }}>
+          <div className="glass-card" style={{ backgroundColor: 'var(--bg-card)' }}>
             <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.0625rem', fontWeight: 700 }}>
               <UserCheck size={18} style={{ color: 'var(--primary)' }} />
               Personal Contact Details
@@ -175,9 +173,9 @@ const ProfilePage = () => {
                 borderRadius: 'var(--radius-sm)',
                 marginBottom: '1.25rem',
                 fontSize: '0.8125rem',
-                backgroundColor: profileMsg.type === 'success' ? '#ecfdf5' : '#fff1f2',
-                border: `1px solid ${profileMsg.type === 'success' ? '#a7f3d0' : '#fecdd3'}`,
-                color: profileMsg.type === 'success' ? '#059669' : '#e11d48',
+                backgroundColor: profileMsg.type === 'success' ? 'var(--success-bg)' : 'var(--danger-bg)',
+                border: `1px solid ${profileMsg.type === 'success' ? 'var(--success-border)' : 'var(--danger-border)'}`,
+                color: profileMsg.type === 'success' ? 'var(--success-text)' : 'var(--danger-text)',
               }}>
                 {profileMsg.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                 <span>{profileMsg.text}</span>
@@ -217,9 +215,9 @@ const ProfilePage = () => {
           </div>
 
           {/* Change Password Form */}
-          <div className="glass-card" style={{ backgroundColor: '#ffffff' }}>
+          <div className="glass-card" style={{ backgroundColor: 'var(--bg-card)' }}>
             <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.0625rem', fontWeight: 700 }}>
-              <KeyRound size={18} style={{ color: '#d97706' }} />
+              <KeyRound size={18} style={{ color: 'var(--accent-amber)' }} />
               Update Account Password
             </h3>
 
@@ -232,9 +230,9 @@ const ProfilePage = () => {
                 borderRadius: 'var(--radius-sm)',
                 marginBottom: '1.25rem',
                 fontSize: '0.8125rem',
-                backgroundColor: pwdMsg.type === 'success' ? '#ecfdf5' : '#fff1f2',
-                border: `1px solid ${pwdMsg.type === 'success' ? '#a7f3d0' : '#fecdd3'}`,
-                color: pwdMsg.type === 'success' ? '#059669' : '#e11d48',
+                backgroundColor: pwdMsg.type === 'success' ? 'var(--success-bg)' : 'var(--danger-bg)',
+                border: `1px solid ${pwdMsg.type === 'success' ? 'var(--success-border)' : 'var(--danger-border)'}`,
+                color: pwdMsg.type === 'success' ? 'var(--success-text)' : 'var(--danger-text)',
               }}>
                 {pwdMsg.type === 'success' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                 <span>{pwdMsg.text}</span>

@@ -192,7 +192,7 @@ const EmployeesPage = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#eef2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4f46e5' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)' }}>
               <Users size={20} />
             </div>
             <span>Employee Directory</span>
@@ -210,11 +210,11 @@ const EmployeesPage = () => {
       </div>
 
       {/* Filter Toolbar Card */}
-      <div className="glass-card" style={{ marginBottom: '1.5rem', padding: '1rem 1.25rem', backgroundColor: '#ffffff' }}>
+      <div className="glass-card" style={{ marginBottom: '1.5rem', padding: '1rem 1.25rem', backgroundColor: 'var(--bg-card)' }}>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
           {/* Search Input */}
           <div style={{ flex: 1, minWidth: '240px', position: 'relative' }}>
-            <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
             <input
               type="text"
               placeholder="Search by name, ID, or corporate email..."
@@ -297,8 +297,8 @@ const EmployeesPage = () => {
                         width: '32px',
                         height: '32px',
                         borderRadius: '50%',
-                        backgroundColor: '#eef2ff',
-                        color: '#4f46e5',
+                        backgroundColor: 'var(--primary-light)',
+                        color: 'var(--primary)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -364,7 +364,7 @@ const EmployeesPage = () => {
       {/* Add Employee Modal */}
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Register New Employee">
         {formError && (
-          <div style={{ padding: '0.75rem', background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
+          <div style={{ padding: '0.75rem', background: 'var(--danger-bg)', color: 'var(--danger-text)', border: '1px solid var(--danger-border)', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
             {formError}
           </div>
         )}
@@ -495,7 +495,7 @@ const EmployeesPage = () => {
       {/* Edit Employee Modal */}
       <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title={`Edit Employee: ${selectedEmp?.fullName}`}>
         {formError && (
-          <div style={{ padding: '0.75rem', background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
+          <div style={{ padding: '0.75rem', background: 'var(--danger-bg)', color: 'var(--danger-text)', border: '1px solid var(--danger-border)', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
             {formError}
           </div>
         )}

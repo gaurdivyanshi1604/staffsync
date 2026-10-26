@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import api from '../api/axios';
 import StatCard from '../components/StatCard';
 import Badge from '../components/Badge';
@@ -15,8 +16,6 @@ import {
   TrendingUp,
   ArrowRight,
   PieChart as PieIcon,
-  Activity,
-  Calendar,
   Sparkles,
 } from 'lucide-react';
 import {
@@ -36,25 +35,23 @@ import {
 } from 'recharts';
 import { Link } from 'react-router-dom';
 
-const DONUT_COLORS = ['#10b981', '#f59e0b', '#cbd5e1'];
-
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div style={{
-        backgroundColor: '#ffffff',
-        border: '1px solid #e2e8f0',
+        backgroundColor: 'var(--chart-tooltip-bg)',
+        border: '1px solid var(--chart-tooltip-border)',
         borderRadius: '10px',
         padding: '0.625rem 0.875rem',
-        boxShadow: '0 4px 12px rgba(15, 23, 42, 0.08)',
+        boxShadow: 'var(--shadow-md)',
         fontSize: '0.75rem',
       }}>
-        <div style={{ fontWeight: 700, color: '#0f172a', marginBottom: '0.35rem' }}>{label}</div>
+        <div style={{ fontWeight: 700, color: 'var(--text-main)', marginBottom: '0.35rem' }}>{label}</div>
         {payload.map((entry, index) => (
           <div key={`item-${index}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', color: entry.color, marginBottom: '2px' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: entry.color }} />
-            <span style={{ color: '#475569', fontWeight: 500 }}>{entry.name}:</span>
-            <span style={{ fontWeight: 700, color: '#0f172a' }}>{entry.value}</span>
+            <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>{entry.name}:</span>
+            <span style={{ fontWeight: 700, color: 'var(--text-main)' }}>{entry.value}</span>
           </div>
         ))}
       </div>
@@ -65,10 +62,15 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const DashboardPage = () => {
   const { user, isHR, isManager } = useAuth();
+  const { isDark } = useTheme();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [todayAttStatus, setTodayAttStatus] = useState(null);
   const [attActionLoading, setAttActionLoading] = useState(false);
+
+  const DONUT_COLORS = isDark ? ['#34d399', '#fbbf24', '#202d45'] : ['#10b981', '#f59e0b', '#e2e8f0'];
+  const chartGridColor = isDark ? '#1e2c45' : '#f1f5f9';
+  const chartAxisColor = isDark ? '#64748b' : '#94a3b8';
 
   const fetchDashboardData = async () => {
     setLoading(true);
@@ -128,8 +130,8 @@ const DashboardPage = () => {
         <div style={{
           width: '36px',
           height: '36px',
-          border: '3px solid #e0e7ff',
-          borderTopColor: '#4f46e5',
+          border: '3px solid var(--border-color)',
+          borderTopColor: 'var(--primary)',
           borderRadius: '50%',
           animation: 'spin 0.8s linear infinite',
           margin: '0 auto 1.25rem',
@@ -144,7 +146,7 @@ const DashboardPage = () => {
   const presentCount = data?.todayAttendance || 0;
   const activeCount = data?.activeEmployees || (isManager ? data?.teamSize : 1) || 1;
   const absentCount = Math.max(0, activeCount - presentCount);
-  
+
   const attendanceDonutData = [
     { name: 'Present Today', value: presentCount },
     { name: 'Not Checked In', value: absentCount },
@@ -161,8 +163,8 @@ const DashboardPage = () => {
           marginBottom: '2rem',
           padding: '1.75rem 2rem',
           borderRadius: 'var(--radius-xl)',
-          background: 'linear-gradient(135deg, #ffffff 0%, #f5f3ff 60%, #eef2ff 100%)',
-          border: '1px solid #e0e7ff',
+          background: 'var(--bg-banner)',
+          border: '1px solid var(--border-banner)',
           boxShadow: 'var(--shadow-sm)',
           display: 'flex',
           flexWrap: 'wrap',
@@ -172,15 +174,27 @@ const DashboardPage = () => {
         }}
       >
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: '#ffffff', padding: '0.25rem 0.75rem', borderRadius: '9999px', border: '1px solid #e2e8f0', fontSize: '0.75rem', fontWeight: 600, color: '#4f46e5', marginBottom: '0.625rem' }}>
-            <Sparkles size={13} style={{ color: '#8b5cf6' }} />
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            backgroundColor: 'var(--bg-card)',
+            padding: '0.25rem 0.75rem',
+            borderRadius: '9999px',
+            border: '1px solid var(--border-color)',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            color: 'var(--primary)',
+            marginBottom: '0.625rem',
+          }}>
+            <Sparkles size={13} style={{ color: 'var(--accent-purple)' }} />
             <span>StaffSync Workspace</span>
           </div>
 
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', margin: 0, letterSpacing: '-0.02em' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-main)', margin: 0, letterSpacing: '-0.02em' }}>
             Good day, {user?.fullName}! 👋
           </h1>
-          <p style={{ color: '#475569', fontSize: '0.875rem', marginTop: '0.35rem', maxWidth: '620px' }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginTop: '0.35rem', maxWidth: '620px' }}>
             {isHR
               ? 'Here is an overview of your organization workforce, real-time presence, and pending HR tasks.'
               : isManager
@@ -191,7 +205,7 @@ const DashboardPage = () => {
 
         {/* Quick Shift Terminal Pill */}
         <div style={{
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--bg-card)',
           border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-lg)',
           padding: '0.875rem 1.25rem',
@@ -251,7 +265,7 @@ const DashboardPage = () => {
               value={data.totalEmployees || 0}
               subtext={`${data.activeEmployees || 0} active employees`}
               icon={Users}
-              color="#4f46e5"
+              color="var(--accent-indigo)"
               bgTint="#eef2ff"
               badgeText="Active Roster"
               badgeType="info"
@@ -261,7 +275,7 @@ const DashboardPage = () => {
               value={data.todayAttendance || 0}
               subtext="Clocked in today"
               icon={CalendarCheck}
-              color="#10b981"
+              color="var(--accent-emerald)"
               bgTint="#ecfdf5"
               badgeText={`${presentPercentage}% Present`}
               badgeType="success"
@@ -271,7 +285,7 @@ const DashboardPage = () => {
               value={data.pendingLeaves || 0}
               subtext="Awaiting review"
               icon={CalendarRange}
-              color="#d97706"
+              color="var(--accent-amber)"
               bgTint="#fffbeb"
               badgeText="Action Req"
               badgeType="warning"
@@ -281,7 +295,7 @@ const DashboardPage = () => {
               value={data.activeTraining || 0}
               subtext="Scheduled & ongoing"
               icon={GraduationCap}
-              color="#8b5cf6"
+              color="var(--accent-purple)"
               bgTint="#f5f3ff"
               badgeText="L&D Portal"
               badgeType="role"
@@ -301,7 +315,16 @@ const DashboardPage = () => {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <span className="badge badge-success" style={{ fontSize: '0.7rem' }}>Live Stream</span>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#eef2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4f46e5' }}>
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    backgroundColor: isDark ? 'rgba(124, 58, 237, 0.2)' : '#eef2ff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--primary)',
+                  }}>
                     <TrendingUp size={16} />
                   </div>
                 </div>
@@ -313,22 +336,22 @@ const DashboardPage = () => {
                     <AreaChart data={data.attendanceChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorPresent" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                          <stop offset="5%" stopColor={isDark ? '#34d399' : '#10b981'} stopOpacity={0.3} />
+                          <stop offset="95%" stopColor={isDark ? '#34d399' : '#10b981'} stopOpacity={0} />
                         </linearGradient>
                         <linearGradient id="colorLate" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25} />
-                          <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                          <stop offset="5%" stopColor={isDark ? '#fbbf24' : '#f59e0b'} stopOpacity={0.3} />
+                          <stop offset="95%" stopColor={isDark ? '#fbbf24' : '#f59e0b'} stopOpacity={0} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                      <XAxis dataKey="_id" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                      <YAxis stroke="#94a3b8" fontSize={11} allowDecimals={false} axisLine={false} tickLine={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} vertical={false} />
+                      <XAxis dataKey="_id" stroke={chartAxisColor} fontSize={11} tickLine={false} />
+                      <YAxis stroke={chartAxisColor} fontSize={11} allowDecimals={false} axisLine={false} tickLine={false} />
                       <Tooltip content={<CustomTooltip />} />
                       <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} iconType="circle" />
-                      <Area type="monotone" dataKey="present" name="Present" stroke="#10b981" strokeWidth={2.5} fillOpacity={1} fill="url(#colorPresent)" />
-                      <Area type="monotone" dataKey="late" name="Late" stroke="#f59e0b" strokeWidth={2.5} fillOpacity={1} fill="url(#colorLate)" />
-                      <Area type="monotone" dataKey="halfDay" name="Half-Day" stroke="#f43f5e" strokeWidth={2} fillOpacity={0} />
+                      <Area type="monotone" dataKey="present" name="Present" stroke={isDark ? '#34d399' : '#10b981'} strokeWidth={2.5} fillOpacity={1} fill="url(#colorPresent)" />
+                      <Area type="monotone" dataKey="late" name="Late" stroke={isDark ? '#fbbf24' : '#f59e0b'} strokeWidth={2.5} fillOpacity={1} fill="url(#colorLate)" />
+                      <Area type="monotone" dataKey="halfDay" name="Half-Day" stroke={isDark ? '#fb7185' : '#f43f5e'} strokeWidth={2} fillOpacity={0} />
                     </AreaChart>
                   </ResponsiveContainer>
                 ) : (
@@ -344,7 +367,16 @@ const DashboardPage = () => {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                   <h3 style={{ margin: 0, fontSize: '1.0625rem', fontWeight: 700 }}>Today's Presence</h3>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10b981' }}>
+                  <div style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '8px',
+                    backgroundColor: isDark ? 'rgba(52, 211, 153, 0.2)' : '#f0fdf4',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--accent-emerald)',
+                  }}>
                     <PieIcon size={16} />
                   </div>
                 </div>
@@ -379,7 +411,7 @@ const DashboardPage = () => {
                   textAlign: 'center',
                   pointerEvents: 'none',
                 }}>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1 }}>
                     {presentPercentage}%
                   </div>
                   <div style={{ fontSize: '0.6875rem', color: 'var(--text-dim)', fontWeight: 600, marginTop: '2px' }}>
@@ -391,11 +423,11 @@ const DashboardPage = () => {
               {/* Donut Legend */}
               <div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: '0.75rem', borderTop: '1px solid var(--border-color)', fontSize: '0.75rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: isDark ? '#34d399' : '#10b981' }} />
                   <span style={{ color: 'var(--text-muted)' }}>Present ({presentCount})</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#cbd5e1' }} />
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: isDark ? '#202d45' : '#cbd5e1' }} />
                   <span style={{ color: 'var(--text-muted)' }}>Unmarked ({absentCount})</span>
                 </div>
               </div>
@@ -411,7 +443,16 @@ const DashboardPage = () => {
                   Workforce headcount distribution across functional units
                 </p>
               </div>
-              <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#f5f3ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                backgroundColor: isDark ? 'rgba(139, 92, 246, 0.2)' : '#f5f3ff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--accent-purple)',
+              }}>
                 <Building2 size={16} />
               </div>
             </div>
@@ -420,11 +461,11 @@ const DashboardPage = () => {
               {data.departmentStats && data.departmentStats.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={data.departmentStats} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                    <XAxis dataKey="_id" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                    <YAxis stroke="#94a3b8" fontSize={11} allowDecimals={false} axisLine={false} tickLine={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor} vertical={false} />
+                    <XAxis dataKey="_id" stroke={chartAxisColor} fontSize={11} tickLine={false} />
+                    <YAxis stroke={chartAxisColor} fontSize={11} allowDecimals={false} axisLine={false} tickLine={false} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="count" name="Staff Count" fill="#6366f1" radius={[6, 6, 0, 0]} maxBarSize={45} />
+                    <Bar dataKey="count" name="Staff Count" fill={isDark ? '#8b5cf6' : '#6366f1'} radius={[6, 6, 0, 0]} maxBarSize={45} />
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
@@ -446,7 +487,7 @@ const DashboardPage = () => {
               value={data.teamSize || 0}
               subtext="Supervised staff"
               icon={Users}
-              color="#3b82f6"
+              color="var(--accent-blue)"
               bgTint="#eff6ff"
               badgeText="Department"
               badgeType="info"
@@ -456,7 +497,7 @@ const DashboardPage = () => {
               value={data.teamAttendanceToday || 0}
               subtext="Clocked in today"
               icon={CalendarCheck}
-              color="#10b981"
+              color="var(--accent-emerald)"
               bgTint="#ecfdf5"
               badgeText="On Shift"
               badgeType="success"
@@ -466,7 +507,7 @@ const DashboardPage = () => {
               value={data.pendingLeaves || 0}
               subtext="Require your approval"
               icon={CalendarRange}
-              color="#d97706"
+              color="var(--accent-amber)"
               bgTint="#fffbeb"
               badgeText="Pending Decision"
               badgeType="warning"
@@ -476,7 +517,7 @@ const DashboardPage = () => {
               value={data.upcomingTraining || 0}
               subtext="Scheduled learning"
               icon={GraduationCap}
-              color="#8b5cf6"
+              color="var(--accent-purple)"
               bgTint="#f5f3ff"
               badgeText="Enrolled"
               badgeType="role"
@@ -493,7 +534,7 @@ const DashboardPage = () => {
             value={`${data.leaveBalance?.casualRemaining ?? 12} Days`}
             subtext="Available this calendar year"
             icon={CalendarRange}
-            color="#0284c7"
+            color="var(--accent-cyan)"
             bgTint="#f0f9ff"
             badgeText="Quota"
             badgeType="info"
@@ -503,7 +544,7 @@ const DashboardPage = () => {
             value={`${data.leaveBalance?.sickRemaining ?? 8} Days`}
             subtext="Medical leave allocation"
             icon={CalendarCheck}
-            color="#10b981"
+            color="var(--accent-emerald)"
             bgTint="#ecfdf5"
             badgeText="Medical"
             badgeType="success"
@@ -513,7 +554,7 @@ const DashboardPage = () => {
             value={data.upcomingTraining?.length || 0}
             subtext="Enrolled courses"
             icon={GraduationCap}
-            color="#8b5cf6"
+            color="var(--accent-purple)"
             bgTint="#f5f3ff"
             badgeText="L&D"
             badgeType="role"
@@ -527,7 +568,16 @@ const DashboardPage = () => {
         <div className="glass-card" style={{ gridColumn: 'span 8' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: '#fffbeb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
+              <div style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                backgroundColor: isDark ? 'rgba(251, 191, 36, 0.2)' : '#fffbeb',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--accent-amber)',
+              }}>
                 <Megaphone size={16} />
               </div>
               <div>
@@ -547,7 +597,7 @@ const DashboardPage = () => {
                   key={ann._id}
                   style={{
                     padding: '1rem 1.125rem',
-                    backgroundColor: '#f8fafc',
+                    backgroundColor: 'var(--bg-surface)',
                     border: '1px solid var(--border-color)',
                     borderRadius: 'var(--radius-sm)',
                     transition: 'border-color var(--transition-fast)',
@@ -575,21 +625,21 @@ const DashboardPage = () => {
           <h3 style={{ margin: '0 0 1.25rem', fontSize: '1.0625rem', fontWeight: 700 }}>Quick Actions</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <Link to="/attendance" className="btn btn-outline" style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem' }}>
-              <Clock size={16} style={{ color: '#0284c7' }} />
+              <Clock size={16} style={{ color: 'var(--accent-cyan)' }} />
               <span>Log Attendance & Timesheets</span>
             </Link>
             <Link to="/leaves" className="btn btn-outline" style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem' }}>
-              <CalendarRange size={16} style={{ color: '#d97706' }} />
+              <CalendarRange size={16} style={{ color: 'var(--accent-amber)' }} />
               <span>Apply for Time Off</span>
             </Link>
             {(isHR || isManager) && (
               <Link to="/employees" className="btn btn-outline" style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem' }}>
-                <Users size={16} style={{ color: '#10b981' }} />
+                <Users size={16} style={{ color: 'var(--accent-emerald)' }} />
                 <span>Personnel Directory</span>
               </Link>
             )}
             <Link to="/training" className="btn btn-outline" style={{ justifyContent: 'flex-start', padding: '0.75rem 1rem' }}>
-              <GraduationCap size={16} style={{ color: '#8b5cf6' }} />
+              <GraduationCap size={16} style={{ color: 'var(--accent-purple)' }} />
               <span>Training Catalog</span>
             </Link>
           </div>

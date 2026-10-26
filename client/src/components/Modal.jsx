@@ -22,7 +22,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div
         className="modal-content"
-        style={{ maxWidth }}
+        style={{ maxWidth, backgroundColor: 'var(--bg-card)' }}
         onClick={(e) => e.stopPropagation()}
       >
         <div style={{
@@ -31,7 +31,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
           justifyContent: 'space-between',
           padding: '1.25rem 1.5rem',
           borderBottom: '1px solid var(--border-color)',
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--bg-surface)',
         }}>
           <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-main)' }}>
             {title}
@@ -45,7 +45,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
             <X size={16} />
           </button>
         </div>
-        <div style={{ padding: '1.5rem', backgroundColor: '#ffffff' }}>
+        <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-card)' }}>
           {children}
         </div>
       </div>

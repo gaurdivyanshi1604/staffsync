@@ -137,7 +137,7 @@ const LeavesPage = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#fffbeb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'var(--warning-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--warning-text)' }}>
               <CalendarRange size={20} />
             </div>
             <span>Time Off & Leave Management</span>
@@ -159,7 +159,7 @@ const LeavesPage = () => {
           value="12 Days"
           subtext="Available this year"
           icon={Calendar}
-          color="#0284c7"
+          color="var(--accent-cyan)"
           bgTint="#f0f9ff"
           badgeText="Annual Quota"
           badgeType="info"
@@ -169,7 +169,7 @@ const LeavesPage = () => {
           value="8 Days"
           subtext="Medical allocation"
           icon={CheckCircle2}
-          color="#10b981"
+          color="var(--accent-emerald)"
           bgTint="#ecfdf5"
           badgeText="Health Care"
           badgeType="success"
@@ -179,7 +179,7 @@ const LeavesPage = () => {
           value="15 Days"
           subtext="Accrued vacation time"
           icon={Clock}
-          color="#8b5cf6"
+          color="var(--accent-purple)"
           bgTint="#f5f3ff"
           badgeText="Paid Vacation"
           badgeType="role"
@@ -189,7 +189,7 @@ const LeavesPage = () => {
           value={myLeaves.filter((l) => l.status === 'Pending').length}
           subtext="Awaiting review"
           icon={AlertCircle}
-          color="#d97706"
+          color="var(--accent-amber)"
           bgTint="#fffbeb"
           badgeText="In Review"
           badgeType="warning"
@@ -368,7 +368,7 @@ const LeavesPage = () => {
       {/* Apply Leave Modal */}
       <Modal isOpen={isApplyModalOpen} onClose={() => setIsApplyModalOpen(false)} title="Submit Leave Application">
         {applyError && (
-          <div style={{ padding: '0.75rem', background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
+          <div style={{ padding: '0.75rem', background: 'var(--danger-bg)', color: 'var(--danger-text)', border: '1px solid var(--danger-border)', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
             {applyError}
           </div>
         )}

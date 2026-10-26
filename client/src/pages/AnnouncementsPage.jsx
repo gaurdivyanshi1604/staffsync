@@ -105,7 +105,7 @@ const AnnouncementsPage = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.75rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#fffbeb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'var(--warning-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--warning-text)' }}>
               <Megaphone size={20} />
             </div>
             <span>Company Announcements</span>
@@ -123,7 +123,7 @@ const AnnouncementsPage = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="glass-card" style={{ marginBottom: '1.75rem', padding: '1rem 1.25rem', backgroundColor: '#ffffff' }}>
+      <div className="glass-card" style={{ marginBottom: '1.75rem', padding: '1rem 1.25rem', backgroundColor: 'var(--bg-card)' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
           {/* Category Pills */}
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -140,7 +140,7 @@ const AnnouncementsPage = () => {
 
           {/* Search */}
           <div style={{ position: 'relative', minWidth: '240px' }}>
-            <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-dim)' }} />
             <input
               type="text"
               placeholder="Search announcements..."
@@ -159,8 +159,8 @@ const AnnouncementsPage = () => {
           Loading announcements...
         </div>
       ) : filteredAnnouncements.length === 0 ? (
-        <div className="glass-card" style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-dim)', backgroundColor: '#ffffff' }}>
-          <Megaphone size={48} style={{ opacity: 0.25, margin: '0 auto 1rem', color: '#d97706' }} />
+        <div className="glass-card" style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-dim)', backgroundColor: 'var(--bg-card)' }}>
+          <Megaphone size={48} style={{ opacity: 0.25, margin: '0 auto 1rem', color: 'var(--accent-amber)' }} />
           <h3>No Announcements Found</h3>
           <p style={{ marginTop: '0.5rem', color: 'var(--text-muted)' }}>No corporate notices match the active filter.</p>
         </div>
@@ -170,7 +170,7 @@ const AnnouncementsPage = () => {
             <div
               key={ann._id}
               className="glass-card glass-card-interactive"
-              style={{ padding: '1.75rem', backgroundColor: '#ffffff' }}
+              style={{ padding: '1.75rem', backgroundColor: 'var(--bg-card)' }}
             >
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -219,7 +219,7 @@ const AnnouncementsPage = () => {
       {/* Post Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Publish Official Notice">
         {formError && (
-          <div style={{ padding: '0.75rem', background: '#fff1f2', color: '#e11d48', border: '1px solid #fecdd3', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
+          <div style={{ padding: '0.75rem', background: 'var(--danger-bg)', color: 'var(--danger-text)', border: '1px solid var(--danger-border)', borderRadius: '6px', marginBottom: '1rem', fontSize: '0.8125rem' }}>
             {formError}
           </div>
         )}
@@ -251,10 +251,10 @@ const AnnouncementsPage = () => {
               </select>
             </div>
             <div className="form-group">
-              <label className="form-label">Target Audience (Optional)</label>
+              <label className="form-label">Target Department (Optional)</label>
               <input
                 type="text"
-                placeholder="Leave blank for All Staff"
+                placeholder="Leave blank for entire company"
                 className="form-input"
                 value={form.targetDepartment}
                 onChange={(e) => setForm({ ...form, targetDepartment: e.target.value })}
@@ -263,11 +263,11 @@ const AnnouncementsPage = () => {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Announcement Content</label>
+            <label className="form-label">Message Content</label>
             <textarea
-              rows={5}
+              rows={4}
               required
-              placeholder="Write the full announcement message..."
+              placeholder="Type your official announcement or policy update here..."
               className="form-textarea"
               value={form.content}
               onChange={(e) => setForm({ ...form, content: e.target.value })}

@@ -78,14 +78,14 @@ const Sidebar = ({ isOpen, onClose }) => {
         className={`sidebar-drawer ${isOpen ? 'open' : ''}`}
         style={{
           width: '260px',
-          backgroundColor: '#ffffff',
+          backgroundColor: 'var(--bg-sidebar)',
           borderRight: '1px solid var(--border-color)',
           display: 'flex',
           flexDirection: 'column',
           flexShrink: 0,
           minHeight: '100vh',
           zIndex: 90,
-          transition: 'transform var(--transition-normal)',
+          transition: 'transform var(--transition-normal), background-color var(--transition-fast), border-color var(--transition-fast)',
         }}
       >
         {/* Brand Header */}
@@ -101,11 +101,11 @@ const Sidebar = ({ isOpen, onClose }) => {
               width: '38px',
               height: '38px',
               borderRadius: '10px',
-              background: 'linear-gradient(135deg, #4f46e5, #8b5cf6)',
+              background: 'linear-gradient(135deg, var(--primary), var(--accent-purple))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(79, 70, 229, 0.25)',
+              boxShadow: '0 2px 8px var(--primary-glow)',
               color: '#ffffff',
             }}>
               <Layers size={22} />
@@ -191,7 +191,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         <div style={{
           padding: '1rem',
           margin: '0.875rem',
-          backgroundColor: '#f8fafc',
+          backgroundColor: 'var(--bg-sidebar-footer)',
           borderRadius: 'var(--radius-md)',
           border: '1px solid var(--border-color)',
         }}>
@@ -204,7 +204,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             </span>
           </div>
           <p style={{ margin: '0.35rem 0 0', fontSize: '0.6875rem', color: 'var(--text-dim)' }}>
-            StaffSync HRMS • Light Edition
+            StaffSync HRMS • Enterprise
           </p>
         </div>
       </aside>
